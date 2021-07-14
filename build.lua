@@ -8,6 +8,7 @@ local params do
 		{ "Output directory", "--output", "-o", 'directory' };
 		{ "Input directory", "--input", "-i", 'directory' };
 		{ "Copy directory", "--copy", "-c", 'directory', 'repeatable' };
+		{ "Delete everything first", "--delete", "-d" };
 	}
 	local validate = shapeshift.table {
 		output = shapeshift.default("out", is.string);
@@ -16,6 +17,7 @@ local params do
 			is.table,
 			shapeshift.each(is.string)
 		});
+		delete = shapeshift.is.boolean;
 	}
 	params = assert(validate(parse{...}))
 end
@@ -83,6 +85,11 @@ for file in restia.utils.files(params.input, "%.post$") do
 			:gsub('[^a-z0-9-_]', '')
 	)
 	restia.utils.deepinsert(tree, path, body)
+end
+
+if params.delete then
+	print("Deleting: "..params.output)
+	restia.utils.delete(params.output)
 end
 
 restia.utils.builddir(params.output, tree)
