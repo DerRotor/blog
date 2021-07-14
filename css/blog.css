@@ -1,0 +1,11 @@
+/* CSS Resets */
+:root { font-family: sans-serif; }
+* {
+	font-family: inherit;
+	box-sizing: border-box;
+}
+
+h1 {
+	border-bottom: .1em solid currentcolor;
+	padding-left: .2em;
+}
