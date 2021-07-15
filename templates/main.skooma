@@ -1,3 +1,5 @@
+local templates = require 'templates'
+
 return function(content, attributes)
 	return render.html(html{
 		head {
@@ -5,6 +7,7 @@ return function(content, attributes)
 			title(attributes.title);
 		};
 		body {
+			templates.nav;
 			article {
 				h1(attributes.title);
 				content;

@@ -1,0 +1,22 @@
+local posts = require 'posts'
+
+local function map(tab, fn)
+	local result = {}
+	for key, value in ipairs(tab) do
+		result[key] = fn(value)
+	end
+	return result
+end
+
+return function()
+	return render.html(nav {
+		ul(map(posts, function(post)
+			return li(a {
+				tostring(post.head.title);
+				href = post.head.uri;
+			}, " ", span {
+				post.head.date;
+			})
+		end));
+	})
+end
