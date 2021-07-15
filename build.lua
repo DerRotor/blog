@@ -17,9 +17,9 @@ local params do
 			is.table,
 			shapeshift.each(is.string)
 		});
-		delete = function() return true end;
+		delete = shapeshift.default(false, shapeshift.is.boolean);
 	}
-	params = assert(validate(parse{...}))
+	params = select(2, assert(validate(parse{...})))
 end
 
 local config = restia.config.bind('config', {
@@ -100,7 +100,7 @@ for idx, post in ipairs(posts) do
 end
 
 if params.delete then
-	print("Deleting: "..params.output)
+	print("Deleting:  "..params.output)
 	restia.utils.delete(params.output)
 end
 
