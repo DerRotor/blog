@@ -1,0 +1,3 @@
+#!/bin/sh
+
+lua build.lua -d -c css -c fonts $@
