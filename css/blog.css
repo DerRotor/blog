@@ -1,11 +1,57 @@
+@import url('/fonts/fonts.css');
+
+/* Colours */
+:root {
+	--hue-primary: 340;
+	--hue-secondary: 100;
+	--hue-tertiary: 220;
+}
+
+/* Layout */
+
+@media (min-width: 60em) {
+	body {
+		display: grid;
+		grid-template-columns: 1fr 40em 1fr;
+	}
+} @media not (min-width: 80em) {
+	body {
+		display: grid;
+		grid-template-rows: 1fr 40em;
+	}
+}
+
+article {
+	max-width: 40em;
+	--line-height: 2em;
+}
+article *+* {
+	padding-top: .6em;
+}
+
+/* Styling */
+
+:root {
+	background-color: #eee;
+	color: #111;
+}
+
+article h1 {
+	border-bottom: .14em double currentcolor;
+}
+
 /* CSS Resets */
 :root { font-family: sans-serif; }
+h1, h2, h3, h4, h5, h6 { font-family: "Raleway", serif; }
+
+h1 { font-size: 2em; font-weight: 200; }
+h2 { font-size: 1.8em; }
+h3 { font-size: 1.6em; }
+h4 { font-size: 1.4em; }
 * {
 	font-family: inherit;
 	box-sizing: border-box;
-}
-
-h1 {
-	border-bottom: .1em solid currentcolor;
-	padding-left: .2em;
+	font-weight: inherit;
+	/* A bit of a hack so line-height inherits properly */
+	line-height: var(--line-height);
 }
