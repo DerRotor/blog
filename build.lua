@@ -65,12 +65,23 @@ local validate_head do
 	}
 end
 
+local function parsedate(date)
+	local year, month, day = date:match("(%d+)%-(%d+)%-(%d+)")
+	return os.time {
+		year = tonumber(year);
+		month = tonumber(month);
+		day = tonumber(day);
+	}
+end
+
 -- Load Posts
 for file in restia.utils.files(params.input, "%.post$") do
 	post = restia.config.post(file)
 	post.head.file = file
 
 	assert(validate_head(post.head))
+
+	post.head.timestamp = parsedate(post.head.date)
 
 	post.head.slug = post.head.title
 		:gsub(' ', '_')
@@ -82,6 +93,10 @@ for file in restia.utils.files(params.input, "%.post$") do
 
 	table.insert(posts, post)
 end
+
+table.sort(posts, function(a, b)
+	return a.head.timestamp > b.head.timestamp
+end)
 
 -- TODO: Index page and stuff
 
