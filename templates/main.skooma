@@ -1,10 +1,19 @@
 local templates = require 'templates'
 
+local function colour(hue)
+	if hue then
+		return style(string.format(":root { --hue-primary: %s; }", hue))
+	else
+		return ""
+	end
+end
+
 return function(content, attributes)
 	return render.html(html{
 		head {
 			link { rel="stylesheet", href="/css/blog.css" };
 			title(attributes.title);
+			colour(attributes.hue);
 		};
 		body {
 			templates.nav;
