@@ -16,7 +16,7 @@
 @media (min-width: 60em) {
 	body {
 		display: grid;
-		grid-template-columns: 1fr 40em 1fr;
+		grid-template-columns: 1fr auto 1fr;
 	}
 } @media not (min-width: 80em) {
 	body {
@@ -61,7 +61,7 @@ nav time {
 /* ARTICLE */
 
 article {
-	max-width: 40em;
+	max-width: 60em;
 	--line-height: 2em;
 }
 
