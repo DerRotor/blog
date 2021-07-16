@@ -76,6 +76,8 @@ for file in restia.utils.files(params.input, "%.post$") do
 		:gsub('[^a-z0-9-_]', '')
 
 	post.head.uri = string.format("/%s/%s.html", post.head.date:gsub("%-", "/"), post.head.slug)
+	post.path = post.head.uri:gsub("%.", "\0"):gsub("/", ".")
+
 	table.insert(posts, post)
 end
 
@@ -95,8 +97,7 @@ for idx, post in ipairs(posts) do
 		body = post.body
 	end
 
-	local path = post.head.uri:gsub("%.", "\0"):gsub("/", ".")
-	restia.utils.deepinsert(tree, path, body)
+	restia.utils.deepinsert(tree, post.path, body)
 end
 
 if params.delete then
