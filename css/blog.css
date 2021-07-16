@@ -2,12 +2,16 @@
 
 /* Colours */
 :root {
-	--hue-primary: 340;
-	--hue-secondary: 100;
-	--hue-tertiary: 220;
-}
+	--hue-primary: 340deg;
+	--hue-secondary: 100deg;
+	--hue-tertiary: 220deg;
 
-/* Layout */
+	--sl-light: 80%, 70%;
+
+	--primary-light: hsl(var(--hue-primary), var(--sl-light));
+	--neutral-light: hsl(340deg, 5%, 70%);
+	--neutral-mid: hsl(340deg, 5%, 50%);
+}
 
 @media (min-width: 60em) {
 	body {
@@ -21,23 +25,91 @@
 	}
 }
 
-article {
-	max-width: 40em;
-	--line-height: 2em;
-}
-article *+* {
-	padding-top: .6em;
-}
-
-/* Styling */
-
 :root {
 	background-color: #eee;
 	color: #111;
 }
 
+/* NAVIGATION */
+
+nav {
+	/* Layout */
+	display: flex;
+	flex-flow: column nowrap;
+	/* Styling */
+	font-size: 1.2em;
+}
+nav ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+nav li::before {
+	content: '\2023';
+	margin-right: .6ch;
+	color: var(--primary-light)
+}
+nav a {
+	text-decoration: none;
+	color: inherit;
+}
+nav time {
+	font-size: 0.6em;
+	color: var(--neutral-mid);
+}
+
+/* ARTICLE */
+
+article {
+	max-width: 40em;
+	--line-height: 2em;
+}
+
+article *+* {
+	padding-top: .6em;
+}
+
 article h1 {
-	border-bottom: .14em double currentcolor;
+	text-align: center;
+}
+article h1::after, article h2::after, hr {
+	--color: var(--neutral-light);
+	content: '';
+	display: block;
+	width: 40%;
+	margin: 0 auto;
+	height: 0;
+	box-sizing: content-box;
+	border: none;
+	border-bottom: .2rem solid var(--color);
+}
+article h1::after, article h2::after {
+	--color: var(--primary-light);
+}
+article h2::after {
+	margin: 0;
+	border-bottom-width: .14rem;
+}
+
+.infobox {
+	--ribbon: .3em;
+	--padding: .6em;
+	--color: var(--primary-light);
+	/* Position */
+	--over: calc(var(--padding) + var(--ribbon));
+	padding: 1em var(--padding);
+	padding-right: calc(var(--padding) + var(--ribbon));
+	/* Styling */
+	border-radius: .3em;
+	background-color: #00000008;
+	border-left: var(--ribbon) solid var(--color);
+	box-shadow:
+		.0em .1em .2em #0001 inset;
+}
+article .infobox {
+	position: relative;
+	left: calc(-1 * var(--over));
+	width: calc(100% + 2 * var(--over));
 }
 
 /* CSS Resets */
