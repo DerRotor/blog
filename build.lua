@@ -22,6 +22,8 @@ local params do
 	params = select(2, assert(validate(parse{...})))
 end
 
+package.loaded.i18n = restia.config.yaml('i18n/de')
+
 local config = restia.config.bind('config', {
 	(require 'restia.config.readfile');
 	(require 'restia.config.lua');
