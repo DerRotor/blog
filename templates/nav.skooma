@@ -11,12 +11,16 @@ end
 
 return function()
 	return render.html(nav {
+		h1(i18n.navigation);
 		ul(map(posts, function(post)
 			return li(a {
-				tostring(post.head.title);
 				href = post.head.uri;
-			}, " ", span {
-				post.head.date;
+				tostring(post.head.title);
+				' ';
+				time {
+					datetime = post.head.date;
+					os.date("%d.%m.%Y", post.head.timestamp);
+				}
 			})
 		end));
 	})
