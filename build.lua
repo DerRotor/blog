@@ -89,7 +89,7 @@ for file in restia.utils.files(params.input, "%.post$") do
 		:gsub('[^a-z0-9-_]', '')
 
 	post.head.uri = string.format("/%s/%s.html", post.head.date:gsub("%-", "/"), post.head.slug)
-	post.path = post.head.uri:gsub("%.", "\0"):gsub("/", ".")
+	post.path = restia.utils.fs2tab(post.head.uri)
 
 	table.insert(posts, post)
 end
