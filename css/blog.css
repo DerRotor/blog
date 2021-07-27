@@ -112,6 +112,16 @@ article .infobox {
 	width: calc(100% + 2 * var(--over));
 }
 
+details {
+	max-width: max-content;
+}
+details summary {
+	cursor: pointer;
+}
+details summary+* {
+	margin-left: .8em;
+}
+
 /* CSS Resets */
 :root { font-family: sans-serif; }
 h1, h2, h3, h4, h5, h6 { font-family: "Raleway", serif; }

@@ -1,6 +1,20 @@
 local posts = require 'posts'
 local i18n = require 'i18n'
 
+local function nest(posts)
+	local nested = {}
+	for i, post in ipairs(posts) do
+		local date = os.date("*t", post.head.timestamp)
+		local last = nested[#nested]
+		if last and last.year == date.year then
+			table.insert(last, post)
+		else
+			table.insert(nested, {year = date.year, post})
+		end
+	end
+	return nested
+end
+
 local function map(tab, fn)
 	local result = {}
 	for key, value in ipairs(tab) do
@@ -9,19 +23,33 @@ local function map(tab, fn)
 	return result
 end
 
+local function list(posts)
+	return ul(map(posts, function(post)
+		return li(a {
+			href = post.head.uri;
+			tostring(post.head.title);
+			' ';
+			time {
+				datetime = post.head.date;
+				os.date("%d.%m.%Y", post.head.timestamp);
+			}
+		})
+	end));
+end
+
 return function()
+	local first = true
 	return render.html(nav {
 		h1(i18n.navigation);
-		ul(map(posts, function(post)
-			return li(a {
-				href = post.head.uri;
-				tostring(post.head.title);
-				' ';
-				time {
-					datetime = post.head.date;
-					os.date("%d.%m.%Y", post.head.timestamp);
-				}
-			})
-		end));
+		map(nest(posts), function(posts)
+			if first then
+				-- Most recent year listed as is
+				first = false
+				return list(posts)
+			else
+				-- Subsequent years are hidden
+				return details(summary(posts.year), list(posts))
+			end
+		end);
 	})
 end
