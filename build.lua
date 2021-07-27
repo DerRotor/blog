@@ -62,6 +62,7 @@ local validate_head do
 		title = is.string;
 		date = shapeshift.matches("%d%d%d%d%-%d%d%-%d%d");
 		file = is.string;
+		publish = is.boolean;
 	}
 end
 
@@ -79,7 +80,12 @@ for file in restia.utils.files(params.input, "%.post$") do
 	post = restia.config.post(file)
 	post.head.file = file
 
-	assert(validate_head(post.head))
+	do
+		local ok, msg = validate_head(post.head, "Post head")
+		if not ok then
+			error("validating head "..file..": "..msg)
+		end
+	end
 
 	post.head.timestamp = parsedate(post.head.date)
 
@@ -91,7 +97,9 @@ for file in restia.utils.files(params.input, "%.post$") do
 	post.head.uri = string.format("/%s/%s.html", post.head.date:gsub("%-", "/"), post.head.slug)
 	post.path = restia.utils.fs2tab(post.head.uri)
 
-	table.insert(posts, post)
+	if post.head.publish then
+		table.insert(posts, post)
+	end
 end
 
 table.sort(posts, function(a, b)
