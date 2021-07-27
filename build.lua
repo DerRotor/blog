@@ -9,6 +9,7 @@ local params do
 		{ "Input directory", "--input", "-i", 'directory' };
 		{ "Copy directory", "--copy", "-c", 'directory', 'repeatable' };
 		{ "Delete everything first", "--delete", "-d" };
+		{ "Render unpublished posts too", "--unpublished" };
 	}
 	local validate = shapeshift.table {
 		output = shapeshift.default("out", is.string);
@@ -18,6 +19,7 @@ local params do
 			shapeshift.each(is.string)
 		});
 		delete = shapeshift.default(false, shapeshift.is.boolean);
+		unpublished = shapeshift.maybe(shapeshift.is.boolean);
 	}
 	params = select(2, assert(validate(parse{...})))
 end
@@ -97,7 +99,7 @@ for file in restia.utils.files(params.input, "%.post$") do
 	post.head.uri = string.format("/%s/%s.html", post.head.date:gsub("%-", "/"), post.head.slug)
 	post.path = restia.utils.fs2tab(post.head.uri)
 
-	if post.head.publish then
+	if post.head.publish or params.unpublished then
 		table.insert(posts, post)
 	end
 end
