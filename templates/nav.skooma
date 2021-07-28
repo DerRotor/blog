@@ -31,7 +31,7 @@ local function list(posts)
 			' ';
 			time {
 				datetime = post.head.date;
-				os.date("%d.%m.%Y", post.head.timestamp);
+				os.date(i18n.date_format, post.head.timestamp);
 			}
 		})
 	end));

@@ -14,6 +14,7 @@ return function(content, attributes)
 			link { rel="stylesheet", href="/css/blog.css" };
 			title(attributes.title);
 			colour(attributes.hue);
+			meta{charset="utf-8"};
 		};
 		body {
 			templates.nav;
