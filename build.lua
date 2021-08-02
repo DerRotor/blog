@@ -86,7 +86,7 @@ local function tag(article, tagname)
 end
 
 -- Load Posts
-for file in restia.utils.files(params.input, "%.post$") do
+for file in restia.utils.files(params.input, "%.md$") do
 	post = restia.config.post(file)
 	post.head.file = file
 
