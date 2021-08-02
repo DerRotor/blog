@@ -8,6 +8,10 @@ local function colour(hue)
 	end
 end
 
+local function tag(name)
+	return a { href="/tags/"..name, name }
+end
+
 return function(content, attributes)
 	return render.html(html{
 		head {
@@ -19,7 +23,10 @@ return function(content, attributes)
 		body {
 			templates.nav;
 			article {
-				h1(attributes.title);
+				header {
+					h1(attributes.title);
+					div{class = "tags", map(tag, attributes.tags)};
+				};
 				content;
 			}
 		};

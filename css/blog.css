@@ -72,7 +72,7 @@ article *+* {
 article h1 {
 	text-align: center;
 }
-article h1::after, article h2::after, hr {
+article header::after, article h2::after, hr {
 	--color: var(--neutral-light);
 	content: '';
 	display: block;
@@ -83,12 +83,32 @@ article h1::after, article h2::after, hr {
 	border: none;
 	border-bottom: .2rem solid var(--color);
 }
-article h1::after, article h2::after {
+article header::after, article h2::after {
 	--color: var(--primary-light);
 }
 article h2::after {
 	margin: 0;
 	border-bottom-width: .14rem;
+}
+article header * {
+	margin: 0;
+}
+
+.tags {
+	font-size: .8rem;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+}
+.tags>* {
+	padding: .4em;
+}
+.tags>*::before {
+	content: '#';
+}
+.tags a:any-link {
+	color: inherit;
+	text-decoration: none;
 }
 
 .infobox {

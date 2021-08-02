@@ -77,6 +77,14 @@ local function parsedate(date)
 	}
 end
 
+local tags = {}
+local function tag(article, tagname)
+	if not tags[tagname] then
+		tags[tagname] = {}
+	end
+	table.insert(tags[tagname], article)
+end
+
 -- Load Posts
 for file in restia.utils.files(params.input, "%.post$") do
 	post = restia.config.post(file)
@@ -86,6 +94,19 @@ for file in restia.utils.files(params.input, "%.post$") do
 		local ok, msg = validate_head(post.head, "Post head")
 		if not ok then
 			error("validating head "..file..": "..msg)
+		end
+	end
+
+	if type(post.head.tags)=="string" then
+		local tags = {}
+		for tag in post.head.tags:gmatch('[%a_-]+') do
+			table.insert(tags, tag)
+		end
+		post.head.tags = tags
+	end
+	if post.head.tags then
+		for tagname in ipairs(post.head.tags) do
+			tag(post, tagname)
 		end
 	end
 
@@ -114,8 +135,8 @@ end)
 for idx, post in ipairs(posts) do
 	local template if post.head.template then
 		template = templates[post.head.template]
-	elseif templates.main then
-		template = templates.main
+	elseif templates.article then
+		template = templates.article
 	end
 
 	local body if template then
