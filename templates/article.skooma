@@ -1,4 +1,5 @@
 local templates = require 'templates'
+local i18n = require 'i18n'
 
 local function colour(hue)
 	if hue then
@@ -25,6 +26,7 @@ return function(content, attributes)
 			article {
 				header {
 					h1(attributes.title);
+					time{datetime=os.date(attributes.date), os.date(i18n.date_format, attributes.timestamp)};
 					div{class = "tags", map(tag, attributes.tags)};
 				};
 				content;
