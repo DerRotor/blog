@@ -27,7 +27,7 @@ return function(content, attributes)
 				header {
 					h1(attributes.title);
 					time{datetime=os.date(attributes.date), os.date(i18n.date_format, attributes.timestamp)};
-					div{class = "tags", map(tag, attributes.tags)};
+					attributes.tags and div{class = "tags", map(tag, attributes.tags)};
 				};
 				content;
 			}
